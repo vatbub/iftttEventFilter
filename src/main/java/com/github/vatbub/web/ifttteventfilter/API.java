@@ -41,7 +41,8 @@ import java.util.Properties;
  * A quick and dirty draft of the api
  */
 public class API extends HttpServlet {
-    private static final String passRegexp = "(?=.*ligne)(?=.*[CD]+)";
+    private static final String passRegexp = "[CD]+";
+    // private static final String passRegexp = "(?=.*ligne)(?=.*[CD]+)";
     private static final String makerEventName = "pushalotevent";
     private static final String makerAPiKey = "dbjf67CBpZit4QOBthB0xW";
 
@@ -96,10 +97,13 @@ public class API extends HttpServlet {
         }
 
         res.passed = pushalotJSONRequest.message.matches(passRegexp);
+        System.out.println("Request passed: " + Boolean.toString(res.passed));
 
         // fire request to the maker channel
         try {
-            Internet.sendEventToIFTTTMakerChannel(makerAPiKey, makerEventName, pushalotJSONRequest.message, pushalotJSONRequest.link, pushalotJSONRequest.imageURL);
+            if (res.passed) {
+                Internet.sendEventToIFTTTMakerChannel(makerAPiKey, makerEventName, pushalotJSONRequest.message, pushalotJSONRequest.link, pushalotJSONRequest.imageURL);
+            }
         } catch (IOException e) {
             // Will only happen if I did a typo above
             Error error = new Error(e.getClass().getName() + " occurred while parsing the request", ExceptionUtils.getFullStackTrace(e));

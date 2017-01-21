@@ -99,6 +99,15 @@ public class API extends HttpServlet {
     }
 
     class PushalotJSONRequest {
+
+        /*
+        Sample JSON:
+        {
+            "message":"{{Text}}"
+            "link":"{{LinkToTweet}}"
+            "imageURL":"{{UserImageUrl}}"
+        }
+         */
         String message;
         String link;
         String imageURL;

@@ -41,7 +41,7 @@ import java.util.Properties;
  * A quick and dirty draft of the api
  */
 public class API extends HttpServlet {
-    private static final String passRegexp = "[CD]+";
+    private static final String passRegexp = "(?=.*ligne)(?=.*[CD]+)";
     private static final String makerEventName = "pushalotevent";
     private static final String makerAPiKey = "dbjf67CBpZit4QOBthB0xW";
 
@@ -86,6 +86,7 @@ public class API extends HttpServlet {
         try {
             System.out.println("Received request:");
             System.out.println(requestBody.toString());
+            System.out.println("Request encoding is: " + request.getCharacterEncoding());
             pushalotJSONRequest = gson.fromJson(requestBody.toString(), PushalotJSONRequest.class);
         } catch (Exception e) {
             sendErrorMail("ParseJSON", requestBody.toString(), e);

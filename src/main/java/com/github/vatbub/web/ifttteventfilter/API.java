@@ -26,12 +26,16 @@ import com.google.gson.GsonBuilder;
 import common.Internet;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Properties;
 
 /**
  * A quick and dirty draft of the api
@@ -44,17 +48,31 @@ public class API extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("application/json");
         PrintWriter writer;
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        StringBuilder requestBody = new StringBuilder();
+        String line;
 
         try {
             writer = response.getWriter();
         } catch (IOException e) {
+            sendErrorMail("getWriter", "Unable not read request", e);
             e.printStackTrace();
             return;
         }
 
+        try {
+            BufferedReader reader = request.getReader();
+            while ((line = reader.readLine()) != null) {
+                requestBody.append(line);
+            }
+        } catch (IOException e) {
+            Error error = new Error(e.getClass().getName() + " occurred while reading the request", ExceptionUtils.getFullStackTrace(e));
+            writer.write(gson.toJson(error));
+            sendErrorMail("ReadRequestBody", requestBody.toString(), e);
+            return;
+        }
         Passed res = new Passed();
-
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         // parse the request
         if (!request.getContentType().equals("application/json")) {
@@ -63,22 +81,18 @@ public class API extends HttpServlet {
             writer.write(gson.toJson(error));
         }
 
-        StringBuilder requestBody = new StringBuilder();
-        String line;
+        PushalotJSONRequest pushalotJSONRequest = null;
+
         try {
-            BufferedReader reader = request.getReader();
-            while ((line = reader.readLine()) != null) {
-                requestBody.append(line);
-            }
-        } catch (IOException e) {
+            System.out.println("Received request:");
+            System.out.println(requestBody.toString());
+            pushalotJSONRequest = gson.fromJson(requestBody.toString(), PushalotJSONRequest.class);
+        } catch (Exception e) {
+            sendErrorMail("ParseJSON", requestBody.toString(), e);
             Error error = new Error(e.getClass().getName() + " occurred while parsing the request", ExceptionUtils.getFullStackTrace(e));
             writer.write(gson.toJson(error));
             return;
         }
-
-        System.out.println("Received request:");
-        System.out.println(requestBody.toString());
-        PushalotJSONRequest pushalotJSONRequest = gson.fromJson(requestBody.toString(), PushalotJSONRequest.class);
 
         res.passed = pushalotJSONRequest.message.matches(passRegexp);
 
@@ -89,11 +103,49 @@ public class API extends HttpServlet {
             // Will only happen if I did a typo above
             Error error = new Error(e.getClass().getName() + " occurred while parsing the request", ExceptionUtils.getFullStackTrace(e));
             writer.write(gson.toJson(error));
+            sendErrorMail("ForwardToIFTTT", requestBody.toString(), e);
             return;
         }
 
         // Tell IFTTT the result of the operation
         writer.write(gson.toJson(res));
+    }
+
+    private void sendErrorMail(String phase, String requestBody, Throwable e) {
+        final String username = "vatbubissues@gmail.com";
+        final String password = "cfgtzhbnvfcdre456780uijhzgt67876ztghjkio897uztgfv";
+        final String toAddress = "vatbub123+automatederrorreports@gmail.com";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(toAddress));
+            message.setSubject("[iftttEventFilter] An error occurred in your application");
+            message.setText("Exception occurred in phase: " + phase + "\n\nRequest that caused the exception:\n" + requestBody
+                    + "\n\nStacktrace of the exception:\n" + ExceptionUtils.getFullStackTrace(e));
+
+            Transport.send(message);
+
+            System.out.println("Sent email with error message to " + toAddress);
+
+        } catch (MessagingException e2) {
+            throw new RuntimeException(e2);
+        }
     }
 
     class Passed {

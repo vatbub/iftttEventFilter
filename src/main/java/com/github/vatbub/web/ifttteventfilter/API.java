@@ -76,6 +76,8 @@ public class API extends HttpServlet {
             return;
         }
 
+        System.out.println("Received request:");
+        System.out.println(requestBody.toString());
         PushalotJSONRequest pushalotJSONRequest = gson.fromJson(requestBody.toString(), PushalotJSONRequest.class);
 
         res.passed = pushalotJSONRequest.message.matches(passRegexp);

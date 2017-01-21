@@ -81,7 +81,7 @@ public class API extends HttpServlet {
             writer.write(gson.toJson(error));
         }
 
-        PushalotJSONRequest pushalotJSONRequest = null;
+        PushalotJSONRequest pushalotJSONRequest;
 
         try {
             System.out.println("Received request:");

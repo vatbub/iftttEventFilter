@@ -30,23 +30,17 @@
         This aims to be a application to filter events on the widely known service IFTTT.
     </description>
 
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
-
-    <!-- <servlet>
-      <servlet-name>api</servlet-name>
-      <servlet-class>
-        org.springframework.web.servlet.DispatcherServlet
-      </servlet-class>
-      <load-on-startup>1</load-on-startup>
+    <servlet>
+        <servlet-name>gui</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-      <servlet-name>api</servlet-name>
-      <url-pattern>/welcome.jsp</url-pattern>
-      <url-pattern>/welcome.html</url-pattern>
-      <url-pattern>*.html</url-pattern>
-    </servlet-mapping> -->
+        <servlet-name>gui</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>api</servlet-name>
         <servlet-class>com.github.vatbub.web.ifttteventfilter.API</servlet-class>
@@ -56,5 +50,31 @@
         <servlet-name>api</servlet-name>
         <url-pattern>/api</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+
+    <!-- Loads Spring Security config file -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/spring-security.xml
+        </param-value>
+    </context-param>
+
+    <!-- Spring Security -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy
+        </filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
 </web-app>

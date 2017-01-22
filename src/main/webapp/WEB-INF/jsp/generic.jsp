@@ -23,22 +23,23 @@
 	templated.co @templatedco
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
+<%@page session="false"%>
 <html>
 	<head>
 	    <jsp:directive.page contentType="text/html; charset=UTF-8" />
-		<title>Generic - Intensify by TEMPLATED</title>
+		<title>${metaTitle}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 	</head>
-	<body class="subpage">
+	<body>
 
 		<!-- Header -->
 			<header id="header">
 				<nav class="left">
 					<a href="#menu"><span>Menu</span></a>
 				</nav>
-				<a href="index.jsp" class="logo">intensify</a>
+				<a href="index.jsp" class="logo">${title}</a>
 				<nav class="right">
 					<a href="#" class="button alt">Log in</a>
 				</nav>

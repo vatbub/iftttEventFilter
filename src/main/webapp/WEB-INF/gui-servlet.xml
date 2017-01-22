@@ -38,8 +38,17 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>classpath:validation</value>
+            </list>
+        </property>
+    </bean>
+
     <mvc:resources mapping="/assets/**" location="/resources/assets/" cache-period="31556926"/>
     <mvc:resources mapping="/images/**" location="/resources/images/" cache-period="31556926"/>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
 
     <mvc:annotation-driven />
 

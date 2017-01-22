@@ -24,6 +24,7 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
 <%@page session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 	<head>
 	    <jsp:directive.page contentType="text/html; charset=UTF-8" />
@@ -41,7 +42,7 @@
 				</nav>
 				<a href="index.jsp" class="logo">${title}</a>
 				<nav class="right">
-					<a href="/j_spring_security_logout" class="button alt">Log out</a>
+					<a href="<c:url value="/logout" />" class="button alt">Log out</a>
 				</nav>
 			</header>
 

@@ -23,7 +23,8 @@ package com.github.vatbub.web.ifttteventfilter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import common.Internet;
+import common.internet.Error;
+import common.internet.Internet;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
 import javax.mail.*;
@@ -170,19 +171,5 @@ public class API extends HttpServlet {
         String message;
         String link;
         String imageURL;
-    }
-
-    class Error {
-        String error;
-        String stacktrace;
-
-        Error(String error) {
-            this(error, "");
-        }
-
-        Error(String error, String stacktrace) {
-            this.error = error;
-            this.stacktrace = stacktrace;
-        }
     }
 }

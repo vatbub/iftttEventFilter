@@ -158,6 +158,7 @@ public class API extends HttpServlet {
         boolean passed;
     }
 
+    @SuppressWarnings({"CanBeFinal", "unused"})
     class PushalotJSONRequest {
 
         /*

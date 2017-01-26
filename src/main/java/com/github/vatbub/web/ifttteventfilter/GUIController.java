@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Frederik on 20/01/2017.
+ * Controller for the frontend
  */
 @Controller
 public class GUIController {
@@ -61,6 +61,7 @@ public class GUIController {
 
     }
 
+    @SuppressWarnings("SameReturnValue")
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

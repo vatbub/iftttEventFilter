@@ -58,7 +58,7 @@ public class API extends HttpServlet {
         try {
             writer = response.getWriter();
         } catch (IOException e) {
-            sendErrorMail("getWriter", "Unable not read request", e);
+            sendErrorMail("getWriter", "Unable to read request", e);
             e.printStackTrace();
             return;
         }

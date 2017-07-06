@@ -19,11 +19,11 @@ notifications:
     - vatbub123+travisbuildnotification@googlemail.com
     on_success: never
 on_failure: always
-deploy:
-  provider: heroku
-  app: ifttteventfilter
-  skip_cleanup: true
-  on:
-    repo: vatbub/iftttEventFilter
-  api_key:
-    secure: clLI/nK+5wBEa53OX5qP/9rGSePIR+tDsshgXYPBuVyvrKbIUEEtWERQuqWBhrchx8KoMI66KI0uFzSHFODA/lMRBNadgyEAsPCKA4Kv1iuao7/Ppm9E1kGAROXoUD3QHtB+BUVhA4XtIDkOD/0FmS2YlrfX4iPIgSh7PwPD8tEWAwV+rP4mEyeR7WZqVFQafyFUH6x1vFSfrmf96Ra/P5Ra971UE9hqI5rdLynsOKXmBbHuvwFFBRzh9SS8K8+r+Arm4EkNpK7XkS+GFf7LMnagZH5TJak2fP3rgqJFsR42ARItWWQQ0AzhaVWqgtbnMx7nDIjcEIsrboiDXEt+HCremmcJuT3lT/iRkMfJk/mPNONBW9e/2BvngzxQWhwMMpFdi5mvYye0UVR7E+0WX3tt8faPH4P4fX5FIVSVHU2O6QR4yd3DYuiCmtt2mHlkLF6IHaDtsmFEzICVMJ7miqJhTMP4O4sDjonBnHb+fSEuEvAvnubt5tHSjBHuxAbe6e+wcco4EK5R+IO+xJUJhewxMkntgRCsZxQEzBOf3nQ7hV2MZ0Me/Pl3UqSgbz+fL6iw6S9Wmo385GbIl+seOv2RgVpoBSmtoAoNlJH6DyHaDnmWBtsKCigZn0ISIt7JEW1enAkaocVxuTiZmeVzKOVUoWVEqxelOw8WDEEqxQI=
+#deploy:
+#  provider: heroku
+#  app: ifttteventfilter
+#  skip_cleanup: true
+#  on:
+#    repo: vatbub/iftttEventFilter
+#  api_key:
+#    secure: clLI/nK+5wBEa53OX5qP/9rGSePIR+tDsshgXYPBuVyvrKbIUEEtWERQuqWBhrchx8KoMI66KI0uFzSHFODA/lMRBNadgyEAsPCKA4Kv1iuao7/Ppm9E1kGAROXoUD3QHtB+BUVhA4XtIDkOD/0FmS2YlrfX4iPIgSh7PwPD8tEWAwV+rP4mEyeR7WZqVFQafyFUH6x1vFSfrmf96Ra/P5Ra971UE9hqI5rdLynsOKXmBbHuvwFFBRzh9SS8K8+r+Arm4EkNpK7XkS+GFf7LMnagZH5TJak2fP3rgqJFsR42ARItWWQQ0AzhaVWqgtbnMx7nDIjcEIsrboiDXEt+HCremmcJuT3lT/iRkMfJk/mPNONBW9e/2BvngzxQWhwMMpFdi5mvYye0UVR7E+0WX3tt8faPH4P4fX5FIVSVHU2O6QR4yd3DYuiCmtt2mHlkLF6IHaDtsmFEzICVMJ7miqJhTMP4O4sDjonBnHb+fSEuEvAvnubt5tHSjBHuxAbe6e+wcco4EK5R+IO+xJUJhewxMkntgRCsZxQEzBOf3nQ7hV2MZ0Me/Pl3UqSgbz+fL6iw6S9Wmo385GbIl+seOv2RgVpoBSmtoAoNlJH6DyHaDnmWBtsKCigZn0ISIt7JEW1enAkaocVxuTiZmeVzKOVUoWVEqxelOw8WDEEqxQI=

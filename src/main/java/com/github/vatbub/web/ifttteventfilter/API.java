@@ -21,10 +21,10 @@ package com.github.vatbub.web.ifttteventfilter;
  */
 
 
+import com.github.vatbub.common.internet.Error;
+import com.github.vatbub.common.internet.Internet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import common.internet.Error;
-import common.internet.Internet;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
 import javax.mail.*;
